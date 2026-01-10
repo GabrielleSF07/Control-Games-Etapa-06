@@ -5,11 +5,10 @@
       xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
       <persistence-unit name="control_games">
           
-          <class>controlgames.controlgamesbd.dao.Compras</class>
-          <class>controlgames.controlgamesbd.dao.Desenvolvedores</class>
-          <class>controlgames.controlgamesbd.dao.Jogos</class>
-          <class>controlgames.controlgamesbd.dao.Usuarios</class>
-      
+        <class>controlgames.controlgamesetapa06.Usuarios</class>
+        <class>controlgames.controlgamesetapa06.Compras</class>
+        <class>controlgames.controlgamesetapa06.Desenvolvedores</class>
+        <class>controlgames.controlgamesetapa06.Jogos</class>
 
         <properties>
           <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
