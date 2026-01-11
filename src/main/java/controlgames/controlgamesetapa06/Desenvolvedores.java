@@ -38,12 +38,11 @@ public class Desenvolvedores {
 
     
     //Método construtor
-    public Desenvolvedores(int id, String nome, String email, String senha, List<Jogos> jogos) {
+    public Desenvolvedores(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.jogos = jogos;
     }
 
     //Métodos getters e setters

@@ -3,32 +3,22 @@ package controlgames.controlgamesetapa06;
 
 import jakarta.persistence.EntityManager;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class DesenvolvedoresDAO {
     private Connector conexao;
-    private Statement stm;
-    private Connection conn;
-    private ResultSet rs;
-    EntityManager em = Connector.getEntityManager();
+    private EntityManager em;
     
-    
-    public void insereDesenvolvedor(Desenvolvedores d){
-      try{
-          em.getTransaction().begin();
-          em.persist(d);
-          em.getTransaction().commit();
-      }  catch (Exception e){
-          Logger.getLogger(DesenvolvedoresDAO.class.getName()).log(Level.SEVERE, null, e);
-          JOptionPane.showMessageDialog(null, e.getMessage());
-      }
+    public DesenvolvedoresDAO(EntityManager em){
+        this.em = em;
     }
     
+    //Salva desenvolvedor
+    public void salvarDesenvolvedor(Desenvolvedores d){
+        em.merge(d);
+    }
+   
+    //Busca desenvolvedor pelo email
     public Desenvolvedores buscarDesenvolvedores (String email){
     try {
         return em.createQuery(
@@ -40,6 +30,7 @@ public class DesenvolvedoresDAO {
     }
     }
     
+    //Faz login do desenvolvedor
     public Desenvolvedores loginDesenvolvedores (String email, String senha){
     try {
         return em.createQuery(
@@ -52,6 +43,7 @@ public class DesenvolvedoresDAO {
     }
         } 
     
+    //lista dados do desenvolvedor
     public Object[] listarDados(String email) {
         try {
             String jpql = "SELECT d.nome, d.email, COUNT(j), SUM(j.quantidadeVendida), SUM(j.valor * j.quantidadeVendida) " +
