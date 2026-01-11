@@ -14,6 +14,9 @@ import java.util.List;
 @Entity
 @Table(name = "desenvolvedores")
 public class Desenvolvedores {
+    
+    public Desenvolvedores(){
+    }
    
     //Atributos
     
@@ -32,6 +35,16 @@ public class Desenvolvedores {
     
     @OneToMany(mappedBy = "desenvolvedora", fetch = FetchType.LAZY)
     private List<Jogos> jogos;
+
+    
+    //Método construtor
+    public Desenvolvedores(int id, String nome, String email, String senha, List<Jogos> jogos) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.jogos = jogos;
+    }
 
     //Métodos getters e setters
     

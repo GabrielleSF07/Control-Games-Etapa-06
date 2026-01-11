@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
     public class JogosDAO {
-        private ControlGamesConnector conexao;
-        private Connection conn;
-        EntityManager em = ControlGamesConnector.getEntityManager();
+        private Connector conexao;
+        EntityManager em;
         EntityTransaction et = em.getTransaction();
-        private Jogos jogo;
+
+        public JogosDAO(EntityManager em){
+            this.em = em;
+        }
 
     //Classe de listagem
     public class listar{
@@ -42,13 +44,17 @@ import java.util.List;
         }
      }
     
-    //Lista todos od jogos
+    //Lista todos os jogos
     public List<Jogos> listarTodos() {
     return em.createQuery("SELECT j FROM Jogos j", Jogos.class)
              .getResultList();
      }
     }
 
+    //Métodos de gerenciamento
+    public class gerenciamento{
+     
+    //Salva um jogo    
     public void salvar(Jogos jogo){
         try{
             et.begin();
@@ -61,7 +67,8 @@ import java.util.List;
             em.close();
         }
     }
-    
+   
+   //Edita um jogo 
    public void editar(Jogos jogo) {
     try {
         et.begin();
@@ -75,6 +82,28 @@ import java.util.List;
      }
     }
    
+   //Exclui um jogo
+    public void excluir(Jogos jogo) {
+    try {
+        et.begin();
+        Jogos jogoGerenciado = em.find(Jogos.class, jogo.getId());
+        if (jogoGerenciado != null) {
+            em.remove(jogoGerenciado);
+        }
+        et.commit();
+    } catch (Exception e) {
+        if (et.isActive()) et.rollback();
+        throw e;
+    } finally {
+        em.close();
+    }
+    }
+     }
+   
+   //Métodos de compra
+   public class compra{ 
+       
+   //Usuário já tem o jogo    
    public boolean usuarioJaComprou(Usuarios u, Jogos j) {
     Long count = em.createQuery(
         "SELECT COUNT(c) FROM Compras c WHERE c.usuario = :u AND c.jogo = :j", Long.class)
@@ -84,6 +113,7 @@ import java.util.List;
     return count > 0;
     }
    
+   //Usuário compra jogo
    public void comprarJogo(Usuarios u, Jogos j) {
     try {
         if (usuarioJaComprou(u, j)) {
@@ -102,23 +132,7 @@ import java.util.List;
     } catch (Exception e) {
         if (et.isActive()) et.rollback();
         throw e;
+     }
     }
    }
-   
-   public void excluir(Jogos jogo) {
-    try {
-        et.begin();
-        Jogos jogoGerenciado = em.find(Jogos.class, jogo.getId());
-        if (jogoGerenciado != null) {
-            em.remove(jogoGerenciado);
-        }
-        et.commit();
-    } catch (Exception e) {
-        if (et.isActive()) et.rollback();
-        throw e;
-    } finally {
-        em.close();
-    }
-    }
-
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class UsuariosDAO {
-    private ControlGamesConnector conexao;
+    private Connector conexao;
     private EntityManager em;
     
     public UsuariosDAO(EntityManager em){
@@ -58,6 +58,6 @@ public class UsuariosDAO {
         e.printStackTrace();
         return null;
     }
-}
-}
+     }
+    }
    
