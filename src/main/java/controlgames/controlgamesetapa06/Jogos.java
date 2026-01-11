@@ -9,6 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "jogos")
 public class Jogos {
+    
+    public Jogos(){
+        
+    }
 
     //Atributos
     
@@ -43,6 +47,20 @@ public class Jogos {
     
     @OneToMany(mappedBy = "jogo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Compras> compras = new ArrayList<>();
+
+    //Construtor
+    
+    public Jogos(int id, String nome, String descricao, String categoria, String faixaEtaria, double valor, LocalDate dataLancamento, Desenvolvedores desenvolvedora, int quantidadeVendida) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.faixaEtaria = faixaEtaria;
+        this.valor = valor;
+        this.dataLancamento = dataLancamento;
+        this.desenvolvedora = desenvolvedora;
+        this.quantidadeVendida = quantidadeVendida;
+    }
 
     //Métodos getters e setters
     

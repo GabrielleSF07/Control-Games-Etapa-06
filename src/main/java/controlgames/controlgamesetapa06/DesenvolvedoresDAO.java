@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DesenvolvedoresDAO {
-   private ControlGamesConnector conexao;
+    private Connector conexao;
     private Statement stm;
     private Connection conn;
     private ResultSet rs;
-    EntityManager em = ControlGamesConnector.getEntityManager();
+    EntityManager em = Connector.getEntityManager();
     
     
     public void insereDesenvolvedor(Desenvolvedores d){

@@ -3,20 +3,20 @@ package controlgames.controlgamesetapa06;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
     public class JogosDAO {
         private ControlGamesConnector conexao;
-        private Statement stm;
         private Connection conn;
-        private ResultSet rs;
         EntityManager em = ControlGamesConnector.getEntityManager();
         EntityTransaction et = em.getTransaction();
         private Jogos jogo;
 
+    //Classe de listagem
+    public class listar{
+      
+    //Lista jogos da desenvolvedora    
     public List<Jogos> listarJogosDev(Desenvolvedores d) {
         try {
             return em.createQuery("SELECT j FROM Jogos j WHERE j.desenvolvedora = :dev", Jogos.class)
@@ -27,6 +27,7 @@ import java.util.List;
         }
     }
 
+    //Lista jogos do usuário
     public List<Jogos> listarJogosUser(Usuarios u) {
         try {
             return em.createQuery(
@@ -39,6 +40,13 @@ import java.util.List;
         } finally {
             em.close();
         }
+     }
+    
+    //Lista todos od jogos
+    public List<Jogos> listarTodos() {
+    return em.createQuery("SELECT j FROM Jogos j", Jogos.class)
+             .getResultList();
+     }
     }
 
     public void salvar(Jogos jogo){
@@ -66,11 +74,6 @@ import java.util.List;
         em.close();
      }
     }
-   
-   public List<Jogos> listarTodos() {
-    return em.createQuery("SELECT j FROM Jogos j", Jogos.class)
-             .getResultList();
-  }
    
    public boolean usuarioJaComprou(Usuarios u, Jogos j) {
     Long count = em.createQuery(
